@@ -20,7 +20,7 @@ This script uses a configuration file (.tabc) that has a list of Profiles and Sy
 In the .tabc provided, there are three (3) Profiles: Staging, Production, Logging.  In terminal, I'll create a few new Settings.
 First, I go to Terminal -> Preferences, then click on the Settings tab.  I create new settings named Default, Staging, Production, Logging, and SSH.
 
-If I type `ssh staging', then the terminal window would use the Staging settings.  If I typed `ssh me@othercompany.example.com' it would use the SSH terminal settings.  When I quit, then it uses Default terminal settings.
+If I type `ssh staging`, then the terminal window would use the Staging settings.  If I typed `ssh me@othercompany.example.com` it would use the SSH terminal settings.  When I quit, then it uses Default terminal settings.
 
 Common Errors
 =============
