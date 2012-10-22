@@ -1,0 +1,11 @@
+:Staging
+staging
+staging.othercompany.example.com
+
+:Production
+myproduction
+root@othercompany.example.com
+root@whitehouse.gov
+
+:Logging
+logs@othercompany.example.com

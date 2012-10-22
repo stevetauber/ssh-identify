@@ -1,0 +1,62 @@
+function ssh {
+
+    file=~/.tabc		#the file with the list of servers
+
+    a=$@		#read in all the params
+    changed=false	#if unknown shell change to yellow
+    servers=0		#array of servers
+    profile=0		#array of corresponding tabc profile name
+    index=1		#index for use in the array
+	currentprofile=0		#used to keep track of the current profile to store
+
+
+    #read in file, build map of servers and their tabc profile names
+    while read line
+    do
+		if [ "0" -ne ${#line} ]
+		then 
+        	if [ ":" = ${line:0:1} ]
+			then
+				#new profile section
+				currentprofile=${line:1}
+			else
+				#bunch of servers
+				servers[$index]=$line
+				profile[$index]=$currentprofile
+		        index=`expr $index + 1`
+			fi
+		fi
+    done <$file
+
+	#get the server name as $1
+    while getopts '1246AaCfgKkMNnqsTtVvXxYyb:c:D:e:F:i:L:l:m:O:o:p:R:S:w:' OPTION
+    do
+        case $OPTION in
+        b|c|D|e|F|i|L|l|m|O|o|p|R|S|w)
+					;;
+	esac
+    done
+    shift $(($OPTIND - 1))
+
+	#find the server name and then change the profile
+	for ((i=0; i<${#servers[@]}; i++))
+	do
+		if [ "$1" = "${servers[i]}" ]
+		then
+			tabc ${profile[i]}
+			changed=true
+		fi
+	done
+
+    if [ "$changed" = "false" ];
+    then
+        tabc "SSH"
+    fi
+    /usr/bin/ssh $a
+    tabc "Default"
+}
+
+function tabc {
+    NAME=$1; if [ -z "$NAME" ]; then NAME="Default"; fi
+    osascript -e "tell application \"Terminal\" to set current settings of front window to settings set \"$NAME\""
+}
